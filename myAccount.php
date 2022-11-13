@@ -16,11 +16,10 @@
         <div class="container">
             <div class="row mt-3 text-success">
                 <div class="col-2 text-start" >
-                    <a href="create.php" class="text-success" style="text-decoration: none;"><?php if (!isset($_SESSION['email'])) { echo "<a href='login.php' class='text-success' style='text-decoration: none;'>Log In</a>";} else {echo "<a href='myAccount.php' class='text-success' style='text-decoration: none;'>My Account</a>";}  ?></a>
+                    <?php if (!isset($_SESSION['email'])) { echo "<a href='login.php' class='text-success' style='text-decoration: none;'>Log In</a>";} else {echo "<a href='myAccount.php' class='text-success' style='text-decoration: none;'>My Account</a>";}  ?>
                 </div>
                 <div class="col-2 text-start" >
-                <?php if (!isset($_SESSION['email'])) { echo "<a href='create.php' class='text-success' style='text-decoration: none;'>Create Account</a>";} else {echo "<a href='logOut.php' class='text-success' style='text-decoration: none;'>Log Out</a>";}  ?>
-
+                    <?php if (!isset($_SESSION['email'])) { echo "<a href='create.php' class='text-success' style='text-decoration: none;'>Create Account</a>";} else {echo "<a href='logOut.php' class='text-success' style='text-decoration: none;'>Log Out</a>";} ?>
                 </div>
                 <div class="col-7 text-center">
                     <i class="bi bi-search"></i>
@@ -35,7 +34,8 @@
 
             <div class="row">
                 <div class="col display-4 text-center justify-content-center text-success">
-                    <a href="index.php" class="text-success " style="text-decoration: none;">Food <i class="bi bi-egg"></i>ptions</a>
+                <a href="index.php" class="text-success " style="text-decoration: none;">Food <i class="bi bi-egg"></i>ptions</a>
+
                 </div>
             </div>
 
@@ -140,19 +140,24 @@
 
         </div>
 
-        <div class="container">
+        <div class="container text-success">
 
-            <form action="functions.php" method="POST" class="text-success">
-                 <p class="display-6 fw-bold">Log In</p>
-                <div class="form-group w-50" id="input">
-                    <input type="text" placeholder="Email" id="email" name="email"  class="form-control my-3" style="background-color: #f4f4f4";>
-                    <input type="password" id="password" name="password" placeholder="Password" class="form-control my-3 " style="background-color: #f4f4f4";><input type="checkbox" onclick="showPass()"> Show password
-                    <input type="submit" id="logIn" name="logIn"  value="SIGN IN" class="form-control text-white bg-success">
-                </div>
-            </form>
-                    <a href="create.php" class="text-success " style="text-decoration: none;"><p class="my-3" > Create Account</p> </a>
-                    <a href="forgotPassword.php" class="text-success " style="text-decoration: none;"><p class="mb-5" > Forgot Password?</p>  </a>
+            <p class="display-6 fw-bold">My Account</p>
 
+            <p class="h4 fw-bold">Order History</p>
+            <br>
+            <p class="h4 fw-bold">Account Details</p>
+            <?php
+
+            require "conn.php";
+
+
+
+            ?>
+            Name:   
+            <br>
+            Email:
+            <br>
             <hr>
 
             <div class="footer py-3 text-success">

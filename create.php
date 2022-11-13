@@ -15,13 +15,13 @@
 
         <div class="container">
             <div class="row  mt-3 text-success">
-                <div class="col-1" >
-                <a href="login.php" class="text-success" style="text-decoration: none;">Log In</a>
+                <div class="col-2" >
+                    <?php if (!isset($_SESSION['email'])) { echo "<a href='login.php' class='text-success' style='text-decoration: none;'>Log In</a>";} else {echo "<a href='myAccount.php' class='text-success' style='text-decoration: none;'>My Account</a>";}  ?>
                 </div>
                 <div class="col-2" >
-                    <a href="create.php" class="text-success" style="text-decoration: none;"> Create Account</a>
+                     <?php if (!isset($_SESSION['email'])) { echo "<a href='create.php' class='text-success' style='text-decoration: none;'>Create Account</a>";} else {echo "<a href='logOut.php' class='text-success' style='text-decoration: none;'>Log Out</a>";} ?>
                 </div>
-                <div class="col-8 text-center">
+                <div class="col-7 text-center">
                     <i class="bi bi-search"></i>
                     Search for a food here
                 </div>
@@ -34,7 +34,8 @@
 
             <div class="row">
                 <div class="col display-4 text-center justify-content-center text-success">
-                    Food <i class="bi bi-egg"></i>ptions
+                <a href="index.php" class="text-success " style="text-decoration: none;">Food <i class="bi bi-egg"></i>ptions</a>
+
                 </div>
             </div>
 
