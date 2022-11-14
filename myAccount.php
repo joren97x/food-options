@@ -157,14 +157,35 @@
 
             require "conn.php";
 
+            $email = $_SESSION['email'];
+            $query = "SELECT * FROM tblAccounts WHERE email = '$email'";
+            $result = mysqli_query($conn, $query);
 
+            if (mysqli_num_rows($result) > 0) {
 
+                $account = mysqli_fetch_array($result);
             ?>
-            Name:   
-            <br>
-            Email:
-            <br>
+
+            <div class="container">
+
+                <form action="functions.php"method="POST">
+                    
+                    <span class='h5'>Name:   <?php $fullName = $account['firstName']." ".$account['lastName']; echo "<span class='fw-normal'>$fullName</span>" ?> </span> 
+                    <br>
+                    <span class='h5'>Email: <?php  $email = $account['email']; echo"<span class='fw-normal'>$email</span>" ?></span> 
+                    <br>
+                    <span class='h5'>Password: <?php $pass = $account['password'];  echo "<input type='password' class='text-success' id='password' style='border: 0;' value='$pass'>"; ?> </span> <br> <input type="checkbox" onclick="showPass()"> Show password
+                    <br>
+                    <input type="button" value="EDIT" class="btn btn-success w-25 mt-3">
+                    <input type="button" id="delete" name="delete" value="DELETE" class="btn btn-danger w-25 mt-3">
+                    
+                </form>
+            </div>
             <hr>
+            <?php
+            }
+                ?>
+
 
             <div class="footer py-3 text-success">
 

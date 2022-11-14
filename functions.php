@@ -15,6 +15,8 @@ if (isset($_POST['create'])) {
 
     $_SESSION['email'] = $email;
     $_SESSION['password'] = $password;
+    $_SESSION['firstName'] = $firstName;
+    $_SESSION['lastName'] = $lastName;
     
     header("Location: index.php");
 }
@@ -34,7 +36,7 @@ if (isset($_POST['logIn'])) {
         header("Location: index.php");
     }
     else {
-        echo "WRONG";
+        echo "WRONG PASSWORD ";
     }
 
 }
