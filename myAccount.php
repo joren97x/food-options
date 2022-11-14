@@ -1,6 +1,12 @@
 <?php
     session_start();
 
+    if(!isset($_SESSION['email'])) {
+
+        header("Location: login.php;");
+
+    }
+
 ?>
 
 <!DOCTYPE html>
@@ -16,10 +22,10 @@
         <div class="container">
             <div class="row mt-3 text-success">
                 <div class="col-2 text-start" >
-                    <?php if (!isset($_SESSION['email'])) { echo "<a href='login.php' class='text-success' style='text-decoration: none;'>Log In</a>";} else {echo "<a href='myAccount.php' class='text-success' style='text-decoration: none;'>My Account</a>";}  ?>
+                    <?php if (!isset($_SESSION['email'])) { echo "<a href='login.php' class='text-success' style='text-decoration: none;'><i class='bi bi-box-arrow-in-right'></i> Log In</a>";} else {echo "<a href='myAccount.php' class='text-success' style='text-decoration: none;'><i class='bi bi-person-circle'></i> My Account</a>";}  ?>
                 </div>
                 <div class="col-2 text-start" >
-                    <?php if (!isset($_SESSION['email'])) { echo "<a href='create.php' class='text-success' style='text-decoration: none;'>Create Account</a>";} else {echo "<a href='logOut.php' class='text-success' style='text-decoration: none;'>Log Out</a>";} ?>
+                    <?php if (!isset($_SESSION['email'])) { echo "<a href='create.php' class='text-success' style='text-decoration: none;'><i class='bi bi-person-add'></i> Create Account</a>";} else {echo "<a href='logOut.php' class='text-success' style='text-decoration: none;'><i class='bi bi-box-arrow-right'></i> Log Out</a>";} ?>
                 </div>
                 <div class="col-7 text-center">
                     <i class="bi bi-search"></i>
@@ -173,7 +179,7 @@
                     <div class="col"><i class="bi bi-instagram"></i> Instagram</div>
                 </div>
                 <div class="row">
-                    <div class="col">My Account</div>
+                    <div class="col"><a href='myAccount.php' class='text-success' style='text-decoration: none;'>My Account</a></div>
                     <div class="col">Privacy Policy</div>
                     <div class="col"><i class="bi bi-facebook"></i> Facebook</div>
                 </div>

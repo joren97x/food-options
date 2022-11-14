@@ -22,10 +22,10 @@
         <div class="container">
             <div class="row  mt-3 text-success">
                 <div class="col-2" >
-                <a href="login.php" class="text-success" style="text-decoration: none;"><p ><?php if (!isset($_SESSION['email'])) { echo "Log In";} else {echo "My Account";}  ?></p></a>
+                <a href="login.php" class="text-success" style="text-decoration: none;"><p ><?php if (!isset($_SESSION['email'])) { echo "<i class='bi bi-box-arrow-in-right'></i> Log In";} else {echo "<i class='bi bi-person-circle'></i> My Account";}  ?></p></a>
                 </div>
                 <div class="col-2" >
-                    <a href="create.php" class="text-success" style="text-decoration: none;"> <?php if (!isset($_SESSION['email'])) { echo "Create Account";} else {echo "Log Out";}  ?></a>
+                    <a href="create.php" class="text-success" style="text-decoration: none;"> <?php if (!isset($_SESSION['email'])) { echo "<i class='bi bi-person-add'></i> Create Account";} else {echo " <i class='bi bi-box-arrow-right'></i> Log Out";}  ?></a>
                 </div>
                 <div class="col-7 text-center">
                     <i class="bi bi-search"></i>
