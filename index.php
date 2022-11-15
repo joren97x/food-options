@@ -1,4 +1,5 @@
 <?php
+    require "conn.php";
     session_start();
 
 ?>
@@ -14,14 +15,14 @@
 
         <div class="container">
 
-            <div class="row  mt-3 text-success">
-                <div class="col-1">
-                    <a href="login.php" class="text-success" style="text-decoration: none;">Log In</a>
+            <div class="row  mt-3 text-success" >
+                <div class="col-2" >
+                    <?php if (!isset($_SESSION['email'])) { echo "<a href='login.php' class='text-success' style='text-decoration: none;'><i class='bi bi-box-arrow-in-right'></i> Log In</a>";} else {echo "<a href='myAccount.php' class='text-success' style='text-decoration: none;'><i class='bi bi-person-circle'></i> My Account</a>";}  ?>
                 </div>
                 <div class="col-2" >
-                    <a href="create.php" class="text-success" style="text-decoration: none;"> Create Account</a>
+                    <?php if (!isset($_SESSION['email'])) { echo "<a href='create.php' class='text-success' style='text-decoration: none;'><i class='bi bi-person-add'></i> Create Account</a>";} else {echo "<a href='logOut.php' class='text-success' style='text-decoration: none;'> <i class='bi bi-box-arrow-right'></i> Log Out</a>";} ?>
                 </div>
-                <div class="col-8 text-center">
+                <div class="col-7 text-center">
                     <i class="bi bi-search"></i>
                     Search for a food here
                 </div>
@@ -34,14 +35,26 @@
 
             <div class="row">
                 <div class="col display-4 text-center justify-content-center text-success">
-                    Food <i class="bi bi-egg"></i>ptions
+                    <a href="index.php" class="text-success " style="text-decoration: none;">Food <i class="bi bi-egg"></i>ptions</a>
                 </div>
             </div>
 
             <div class="row bg-success mt-3 text-center p-2">
+
+            <?php
+
+                $query = "SELECT * FROM tblCategory";
+                $result = mysqli_query($conn, $query);
+
+                if(mysqli_num_rows($result) > 0) {
+
+                    foreach($result as $category) {
+
+            ?>
+
                 <div class="col">
                     <div class="dropdown">
-                        <button class=" btn btn-success dropdown-toggle"  data-bs-toggle="dropdown" >Eggs</button>
+                        <button class=" btn btn-success dropdown-toggle"  data-bs-toggle="dropdown" ><?php  echo $category['categoryName']; ?></button>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="">Small Eggs</a> 
                             <a class="dropdown-item" href="">Medium Eggs</a>
@@ -49,90 +62,14 @@
                         </div>
                     </div>
                 </div>
-                <div class="col">
-                    <div class="dropdown">
-                        <button class=" btn btn-success dropdown-toggle"  data-bs-toggle="dropdown" >Fruits</button>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="">Apple</a>
-                            <a class="dropdown-item" href="">Avocado</a>
-                            <a class="dropdown-item" href="">Coconut</a>
-                            <a class="dropdown-item" href="">Grapes</a>
-                            <a class="dropdown-item" href="">Pineapple</a>
-                            <a class="dropdown-item" href="">Papaya</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="dropdown">
-                        <button class=" btn btn-success dropdown-toggle"  data-bs-toggle="dropdown" >Vegetables</button>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="">Small Eggs</a>
-                            <a class="dropdown-item" href="">Medium Eggs</a>
-                            <a class="dropdown-item" href="">Big Eggs</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="dropdown">
-                        <button class=" btn btn-success dropdown-toggle"  data-bs-toggle="dropdown" >Meat</button>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="">Small Eggs</a>
-                            <a class="dropdown-item" href="">Medium Eggs</a>
-                            <a class="dropdown-item" href="">Big Eggs</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="dropdown">
-                        <button class=" btn btn-success dropdown-toggle"  data-bs-toggle="dropdown" >Seafood</button>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="">Small Eggs</a>
-                            <a class="dropdown-item" href="">Medium Eggs</a>
-                            <a class="dropdown-item" href="">Big Eggs</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="dropdown">
-                        <button class=" btn btn-success dropdown-toggle"  data-bs-toggle="dropdown" >Fast Food</button>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="">Small Eggs</a>
-                            <a class="dropdown-item" href="">Medium Eggs</a>
-                            <a class="dropdown-item" href="">Big Eggs</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="dropdown">
-                        <button class=" btn btn-success dropdown-toggle"  data-bs-toggle="dropdown" >Bread</button>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="">Small Eggs</a>
-                            <a class="dropdown-item" href="">Medium Eggs</a>
-                            <a class="dropdown-item" href="">Big Eggs</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="dropdown">
-                        <button class=" btn btn-success dropdown-toggle"  data-bs-toggle="dropdown" >Herbs & Spices</button>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="">Small Eggs</a>
-                            <a class="dropdown-item" href="">Medium Eggs</a>
-                            <a class="dropdown-item" href="">Big Eggs</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="dropdown">
-                        <button class=" btn btn-success dropdown-toggle"  data-bs-toggle="dropdown" >Drinks</button>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="">Small Eggs</a>
-                            <a class="dropdown-item" href="">Medium Eggs</a>
-                            <a class="dropdown-item" href="">Big Eggs</a>
-                        </div>
-                    </div>
-                </div>
+                        
 
+            <?php
+
+                    }
+                }
+
+            ?>
             </div>
 
             <hr>
@@ -152,7 +89,45 @@
                 </div>
             </div>
 
+
             <!-- MGA BALIGYA WALA PAY SOLUD :( -->
+
+            <div class="container mt-5">
+                
+                <div class="row">
+                    <div class="col">
+                        <div class="card" style="width: 300px;">
+                            <img class="card-img-top m-5" src="egg.png" alt="Card image cap" style="width: 250px;">
+                                <div class="card-body">
+                                    <a href="#" class="btn btn-primary">Add to Cart</a>
+                                    <h5 class="card-title">Small Eggs</h5>
+                                    <p class="card-text">₱250.00</p>
+                                </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card" style="width: 300px;">
+                            <img class="card-img-top m-5" src="egg.png" alt="Card image cap" style="width: 250px;">
+                                <div class="card-body">
+                                    <a href="#" class="btn btn-primary">Add to Cart</a>
+                                    <h5 class="card-title">Small Eggs</h5>
+                                    <p class="card-text">₱250.00</p>
+                                </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card" style="width: 300px;">
+                            <img class="card-img-top m-5" src="egg.png" alt="Card image cap" style="width: 250px;">
+                                <div class="card-body">
+                                    <a href="#" class="btn btn-primary">Add to Cart</a>
+                                    <h5 class="card-title">Small Eggs</h5>
+                                    <p class="card-text">₱250.00</p>
+                                </div>
+                        </div>
+                    </div>
+                </div>    
+
+            </div>
 
             <hr>
 
@@ -169,7 +144,7 @@
                     <div class="col"><i class="bi bi-instagram"></i> Instagram</div>
                 </div>
                 <div class="row">
-                    <div class="col">My Account</div>
+                    <div class="col"><a href='myAccount.php' class='text-success' style='text-decoration: none;'>My Account</a></div>
                     <div class="col">Privacy Policy</div>
                     <div class="col"><i class="bi bi-facebook"></i> Facebook</div>
                 </div>

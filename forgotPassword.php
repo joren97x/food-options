@@ -1,5 +1,12 @@
 <?php
+    require "conn.php";
     session_start();
+
+    if(isset($_SESSION['email'])) {
+
+        header("Location: index.php");
+
+    }
 
 ?>
 
@@ -15,13 +22,13 @@
 
         <div class="container">
             <div class="row  mt-3 text-success">
-                <div class="col-1" >
-                <a href="login.php" class="text-success" style="text-decoration: none;">Log In</a>
+                <div class="col-2" >
+                <a href="login.php" class="text-success" style="text-decoration: none;"><p ><?php if (!isset($_SESSION['email'])) { echo "<i class='bi bi-box-arrow-in-right'></i> Log In";} else {echo "<i class='bi bi-person-circle'></i> My Account";}  ?></p></a>
                 </div>
                 <div class="col-2" >
-                    <a href="create.php" class="text-success" style="text-decoration: none;"> Create Account</a>
+                    <a href="create.php" class="text-success" style="text-decoration: none;"> <?php if (!isset($_SESSION['email'])) { echo "<i class='bi bi-person-add'></i> Create Account";} else {echo " <i class='bi bi-box-arrow-right'></i> Log Out";}  ?></a>
                 </div>
-                <div class="col-8 text-center">
+                <div class="col-7 text-center">
                     <i class="bi bi-search"></i>
                     Search for a food here
                 </div>
@@ -34,14 +41,27 @@
 
             <div class="row">
                 <div class="col display-4 text-center justify-content-center text-success">
-                    Food <i class="bi bi-egg"></i>ptions
+                <a href="index.php" class="text-success " style="text-decoration: none;">Food <i class="bi bi-egg"></i>ptions</a>
+                    
                 </div>
             </div>
 
             <div class="row bg-success mt-3 text-center p-2">
+
+            <?php
+
+                $query = "SELECT * FROM tblCategory";
+                $result = mysqli_query($conn, $query);
+
+                if(mysqli_num_rows($result) > 0) {
+
+                    foreach($result as $category) {
+
+            ?>
+
                 <div class="col">
                     <div class="dropdown">
-                        <button class=" btn btn-success dropdown-toggle"  data-bs-toggle="dropdown" >Eggs</button>
+                        <button class=" btn btn-success dropdown-toggle"  data-bs-toggle="dropdown" ><?php  echo $category['categoryName']; ?></button>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="">Small Eggs</a> 
                             <a class="dropdown-item" href="">Medium Eggs</a>
@@ -49,90 +69,15 @@
                         </div>
                     </div>
                 </div>
-                <div class="col">
-                    <div class="dropdown">
-                        <button class=" btn btn-success dropdown-toggle"  data-bs-toggle="dropdown" >Fruits</button>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="">Apple</a>
-                            <a class="dropdown-item" href="">Avocado</a>
-                            <a class="dropdown-item" href="">Coconut</a>
-                            <a class="dropdown-item" href="">Grapes</a>
-                            <a class="dropdown-item" href="">Pineapple</a>
-                            <a class="dropdown-item" href="">Papaya</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="dropdown">
-                        <button class=" btn btn-success dropdown-toggle"  data-bs-toggle="dropdown" >Vegetables</button>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="">Small Eggs</a>
-                            <a class="dropdown-item" href="">Medium Eggs</a>
-                            <a class="dropdown-item" href="">Big Eggs</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="dropdown">
-                        <button class=" btn btn-success dropdown-toggle"  data-bs-toggle="dropdown" >Meat</button>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="">Small Eggs</a>
-                            <a class="dropdown-item" href="">Medium Eggs</a>
-                            <a class="dropdown-item" href="">Big Eggs</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="dropdown">
-                        <button class=" btn btn-success dropdown-toggle"  data-bs-toggle="dropdown" >Seafood</button>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="">Small Eggs</a>
-                            <a class="dropdown-item" href="">Medium Eggs</a>
-                            <a class="dropdown-item" href="">Big Eggs</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="dropdown">
-                        <button class=" btn btn-success dropdown-toggle"  data-bs-toggle="dropdown" >Fast Food</button>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="">Small Eggs</a>
-                            <a class="dropdown-item" href="">Medium Eggs</a>
-                            <a class="dropdown-item" href="">Big Eggs</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="dropdown">
-                        <button class=" btn btn-success dropdown-toggle"  data-bs-toggle="dropdown" >Bread</button>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="">Small Eggs</a>
-                            <a class="dropdown-item" href="">Medium Eggs</a>
-                            <a class="dropdown-item" href="">Big Eggs</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="dropdown">
-                        <button class=" btn btn-success dropdown-toggle"  data-bs-toggle="dropdown" >Herbs & Spices</button>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="">Small Eggs</a>
-                            <a class="dropdown-item" href="">Medium Eggs</a>
-                            <a class="dropdown-item" href="">Big Eggs</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="dropdown">
-                        <button class=" btn btn-success dropdown-toggle"  data-bs-toggle="dropdown" >Drinks</button>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="">Small Eggs</a>
-                            <a class="dropdown-item" href="">Medium Eggs</a>
-                            <a class="dropdown-item" href="">Big Eggs</a>
-                        </div>
-                    </div>
-                </div>
+                        
 
+            <?php
+
+                    }
+
+                }
+
+            ?>
             </div>
 
             <hr>
@@ -148,7 +93,7 @@
                 <div class="form-group w-50" >
                     <input type="text" placeholder="Email" id="email" name="email"  class="form-control my-3" style="background-color: #f4f4f4";>
                     <input type="submit" id="create" name="create"  value="SUBMIT" class="form-control text-white bg-success">
-                    <p class="mt-4">Cancel</p>
+                    <a href="login.php" class="text-success " style="text-decoration: none;"><p class="mt-4">Cancel</p></a> 
                 </div>
 
             </form>

@@ -1,5 +1,5 @@
 <?php
-require "conn.php";
+    require "conn.php";
     session_start();
 
 ?>
@@ -80,16 +80,8 @@ require "conn.php";
 
         <div class="container">
 
-            <form action="functions.php" method="POST" class="text-success">
-                 <p class="display-6 fw-bold">Log In</p>
-                <div class="form-group w-50" id="input">
-                    <input type="text" placeholder="Email" id="email" name="email"  class="form-control my-3" style="background-color: #f4f4f4";>
-                    <input type="password" id="password" name="password" placeholder="Password" class="form-control my-3 " style="background-color: #f4f4f4";><input type="checkbox" onclick="showPass()"> Show password
-                    <input type="submit" id="logIn" name="logIn"  value="SIGN IN" class="form-control text-white bg-success">
-                </div>
-            </form>
-                    <a href="create.php" class="text-success " style="text-decoration: none;"><p class="my-3" > Create Account</p> </a>
-                    <a href="forgotPassword.php" class="text-success " style="text-decoration: none;"><p class="mb-5" > Forgot Password?</p>  </a>
+           
+
 
             <hr>
 
