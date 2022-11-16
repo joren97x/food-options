@@ -2,18 +2,12 @@
     require "conn.php";
     session_start();
 
-    if(isset($_SESSION['email'])) {
-
-        header("Location: index.php");
-
-    }
-
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Forgot Password - Food Options</title>
+    <title>Cart - Food Options</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.1/font/bootstrap-icons.css">
@@ -21,12 +15,13 @@
 <body>
 
         <div class="container">
-            <div class="row  mt-3 text-success">
-                <div class="col-2" >
-                <a href="login.php" class="text-success" style="text-decoration: none;"><p ><?php if (!isset($_SESSION['email'])) { echo "<i class='bi bi-box-arrow-in-right'></i> Log In";} else {echo "<i class='bi bi-person-circle'></i> My Account";}  ?></p></a>
+            <div class="row mt-3 text-success">
+                <div class="col-2 text-start" >
+                    <a href="create.php" class="text-success" style="text-decoration: none;"><?php if (!isset($_SESSION['email'])) { echo "<a href='login.php' class='text-success' style='text-decoration: none;'><i class='bi bi-box-arrow-in-right'></i> Log In</a>";} else {echo "<a href='myAccount.php' class='text-success' style='text-decoration: none;'><i class='bi bi-person-circle'></i> My Account</a>";}  ?></a>
                 </div>
-                <div class="col-2" >
-                    <a href="create.php" class="text-success" style="text-decoration: none;"> <?php if (!isset($_SESSION['email'])) { echo "<i class='bi bi-person-add'></i> Create Account";} else {echo " <i class='bi bi-box-arrow-right'></i> Log Out";}  ?></a>
+                <div class="col-2 text-start" >
+                <?php if (!isset($_SESSION['email'])) { echo "<a href='create.php' class='text-success' style='text-decoration: none;'><i class='bi bi-person-add'></i> Create Account</a>";} else {echo "<a href='logOut.php' class='text-success' style='text-decoration: none;'> <i class='bi bi-box-arrow-right'></i> Log Out</a>";}  ?>
+
                 </div>
                 <div class="col-7 text-center">
                     <i class="bi bi-search"></i>
@@ -34,15 +29,14 @@
                 </div>
                 <div class="col-1">
                     <i class="bi bi-cart3"></i>
-                    Cart
+                    <a href='cart.php' class='text-success' style='text-decoration: none;'> Cart</a>
                 </div>
                 <hr class="mt-3">
             </div>
 
             <div class="row">
                 <div class="col display-4 text-center justify-content-center text-success">
-                <a href="index.php" class="text-success " style="text-decoration: none;">Food <i class="bi bi-egg"></i>ptions</a>
-                    
+                    <a href="index.php" class="text-success " style="text-decoration: none;">Food <i class="bi bi-egg"></i>ptions</a>
                 </div>
             </div>
 
@@ -79,24 +73,44 @@
 
             ?>
             </div>
-
             <hr>
+
+                <table class="table table-bordered table-white  align-middle">
+
+                    <tr>
+                        <th >Product</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                    </tr>
+                    <tr>
+                        <td><img src="egg.png">Egg 6pcs</td>
+                        <td >₱20</td>
+                        <td>6</td>
+                        <td>Total</td>
+                    </tr>
+                    <tr>
+                        <td><img src="egg.png">Egg 6pcs</td>
+                        <td>₱20</td>
+                        <td>6</td>
+                        <td>Total</td>
+                    </tr>
+
+
+                </table>
+
+                <div class="row">
+                    <div class="col-12 d-flex justify-content-end">
+                        <button class=" btn btn-success">Check Out</button>
+                    </div>
+                </div>
 
         </div>
 
         <div class="container">
 
-            <form action="functions.php" method="POST" class="text-success">
-                 <p class="display-6 fw-bold">Reset your password</p>
-                 <p>Please enter your email to search for your account.</p>
-                
-                <div class="form-group w-50" >
-                    <input type="text" placeholder="Email" id="email" name="email"  class="form-control my-3" style="background-color: #f4f4f4";>
-                    <input type="submit" id="create" name="create"  value="SUBMIT" class="form-control text-white bg-success">
-                    <a href="login.php" class="text-success " style="text-decoration: none;"><p class="mt-4">Cancel</p></a> 
-                </div>
+           
 
-            </form>
 
             <hr>
 
@@ -148,10 +162,6 @@
 
     }
 
-    function forgotPass() {
-
-        
-
-    }
+    
 
 </script>
