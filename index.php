@@ -1,7 +1,7 @@
 <?php
     session_start();
+    ob_start();
     require "conn.php";
-    
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -49,7 +49,6 @@
                 if(mysqli_num_rows($result) > 0) {
 
                     foreach($result as $category) {
-
             ?>
                 <div class="col">
                         <form action="" method="GET">
@@ -60,7 +59,6 @@
 
                     }
                 }
-
             ?>
             </div>
 
@@ -88,7 +86,6 @@
                         else {
                             echo "Welcome";
                         }
-                        
                         ?>
                     </p>
                 </div>
@@ -107,6 +104,8 @@
                 <div class="row">
 
                         <?php
+
+
                         
                         if(isset($_GET['btnCategory'])) {
 
@@ -117,16 +116,37 @@
                             if (mysqli_num_rows($result) > 0) {
                                 
                                 foreach($result as $product) {
-
                                     ?>
-
                         <div class="col-4 text-success text-center ">
                             <div class="card " style="width: 300px;">
                             <img class="card-img-top m-5" src="img/egg.png" alt="Card image cap" style="width: 250px;">
                                 <div class="card-body">
-                                    <button class="btn btn-success"  onclick="addToCart()" id="<?php echo $categoryID; ?>">Add to Cart</button>
-                                    <h5 class="card-title"><?php echo $product['productName']." (".$product['quantity']." pcs".")"; ?></h5>
-                                    <p class="card-text"><?php echo "₱".$product['price']; ?></p>
+                                    <form action=""method="get">
+                                        <button class="btn btn-success" value="<?php echo $product['id'] ?>"  id="addToCart" name="addToCart">Add to Cart</button>
+                                        <h5 class="card-title"><?php echo $product['productName']." (".$product['quantity']." pcs".")"; ?></h5>
+                                        <p class="card-text"><?php echo "₱".$product['price']; ?></p>
+                                    </form>
+                                    
+                                    <?php
+                                        
+                                        if(isset($_GET['addToCart'])) {
+
+                                            if(!isset($_SESSION['email'])) {
+                                                header("Location: login.php");
+                                            }
+                                            else {
+                                                echo  $_GET['addToCart']."hello?";
+                                                $productID = $_GET['addToCart'];
+                                                $productName = $product['productName'];
+                                                $price = $product['price'];
+                                                $query = "INSERT INTO tblCart (orderID, productName, price) VALUES ('$productID', '$productName', '$price')";
+                                                $queryRun = mysqli_query($conn, $query);
+
+                                            }
+                                        }
+
+                                    ?>
+                                        
                                 </div>
                             </div>
                         </div>
@@ -152,69 +172,20 @@
                             if (mysqli_num_rows($result) > 0) {
                                 
                                 foreach($result as $product) {
-
                                     ?>
-
                         <div class="col text-success text-center">
                             <div class="card" style="width: 300px;">
                             <img class="card-img-top m-5" src="img/egg.png" alt="Card image cap" style="width: 250px;">
                                 <div class="card-body">
                                     
                                     <form action="" action="get">
-                                        <button class="btn btn-success" type="button" id="addToCart" name="addToCart">Add to Cart</button>
+                                        <button class="btn btn-success" value="<?php echo $product['id'] ?>"  id="addToCart" name="addToCart" value="">Add to Cart</button>
                                         <h5 class="card-title"><?php echo $product['productName']; ?></h5>
                                         <p class="card-text"><?php echo "₱".$product['price']; ?></p>
                                     </form>
 
-                                        <?php
-
-                                            if(isset($_GET['addToCart'])) {
-
-                                                ?>
-
-                                                    <script type="text/javascript">
-                                                        
-                                                        let count1 = 0;
-                                                        let count2 = 0;
-                                                        
-                                                        function adding() {
-
-                                                            document.querySelector('#addToCart').innerText = "Adding.."
-                                                            document.querySelector('#addToCart').style.backgroundColor = 'red';
-                                                            count1++;
-                                                        }
-                                                        function thankyou() {
-
-                                                            document.querySelector('#addToCart').innerText = "THANK YOU!"
-                                                            document.querySelector('#addToCart').style.backgroundColor = 'blue';
-                                                            count2++;
-
-                                                        }
-
-                                                        const intervalID = setInterval(function () {
-                                                            adding();
-                                                            if(count1 === 3) {
-                                                                thankyou();
-                                                            }
-                                                            if(count1 === 4) {
-
-                                                                document.querySelector('#addToCart').innerText = "Add to Cart"
-                                                                document.querySelector('#addToCart').style.backgroundColor = 'green';
-                                                                clearInterval(intervalID);                                                                
-
-                                                            }
-                                                            
-                                                        }, 1000);
-
-                                                    </script>
-
-                                                <?php
-
-
-                                            }
-
-                                        ?>
-
+                                    
+                                        
                                 </div>
                             </div>
                         </div>
@@ -226,13 +197,26 @@
 
                             }
 
-                            } 
+                            }
+                                        
+                                        if(isset($_GET['addToCart'])) {
+
+                                            if(!isset($_SESSION['email'])) {
+                                                header("Location: login.php");
+                                            }
+                                            else {
+                                               
+                                                $productID = $_GET['addToCart'];
+                                                $productName = $product['productName'];
+                                                $price = $product['price'];
+                                                $query = "INSERT INTO tblCart (orderID, productName, price) VALUES ('$productID', '$productName', '$price')";
+                                                $queryRun = mysqli_query($conn, $query);
+
+                                            }
+                                        }
+
                         }
-
                         ?>
-
-                    
-                    
                 </div>    
 
             </div>
