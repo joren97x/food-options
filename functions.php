@@ -12,6 +12,12 @@ if (isset($_POST['create'])) {
     $query = "INSERT INTO tblAccounts (firstName, lastName, email, password) 
                 VALUES ('$firstName', '$lastName', '$email', '$password')";
     $result = mysqli_query($conn, $query);
+
+    $_SESSION['email'] = $email;
+    $_SESSION['password'] = $password;
+    $_SESSION['firstName'] = $firstName;
+    $_SESSION['lastName'] = $lastName;
+    
     header("Location: index.php");
 }
 
@@ -27,11 +33,10 @@ if (isset($_POST['logIn'])) {
 
         $_SESSION['email'] = $row['email'];
         $S_SESSION['password'] = $row['password'];
-        echo "LOGGED IN";
-
+        header("Location: index.php");
     }
     else {
-        echo "WRONG";
+        echo "TRY AGAIN";
     }
 
 }

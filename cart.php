@@ -1,19 +1,13 @@
 <?php
-require "conn.php";
+    require "conn.php";
     session_start();
-
-    if (isset($_SESSION['email'])) {
-
-        header("Location: index.php");
-
-    }
 
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Log In - Food Options</title>
+    <title>Cart - Food Options</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.1/font/bootstrap-icons.css">
@@ -58,35 +52,60 @@ require "conn.php";
                     foreach($result as $category) {
 
             ?>
+
                 <div class="col">
                         <form action="" method="GET">
                             <a href="functions.php"><button class=" btn btn-success " name="btnCategory" id="btnCategory" value="<?php echo $category['id']; ?>" ><?php  echo $category['categoryName']; ?></button></a>
                         </form>
                 </div>
+                        
+
             <?php
 
                     }
+
                 }
 
             ?>
             </div>
-
             <hr>
+
+                <table class="table table-bordered table-white  align-middle">
+
+                    <tr>
+                        <th >Product</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                    </tr>
+                    <tr>
+                        <td><img src="img/egg.png">Egg 6pcs</td>
+                        <td >₱20</td>
+                        <td>6</td>
+                        <td>Total</td>
+                    </tr>
+                    <tr>
+                        <td><img src="img/egg.png">Egg 6pcs</td>
+                        <td>₱20</td>
+                        <td>6</td>
+                        <td>Total</td>
+                    </tr>
+
+
+                </table>
+
+                <div class="row">
+                    <div class="col-12 d-flex justify-content-end">
+                        <button class=" btn btn-success">Check Out</button>
+                    </div>
+                </div>
 
         </div>
 
         <div class="container">
 
-            <form action="functions.php" method="POST" class="text-success">
-                 <p class="display-6 fw-bold">Log In</p>
-                <div class="form-group w-50" id="input">
-                    <input type="text" placeholder="Email" id="email" name="email"  class="form-control my-3" style="background-color: #f4f4f4";>
-                    <input type="password" id="password" name="password" placeholder="Password" class="form-control my-3 " style="background-color: #f4f4f4";><input type="checkbox" onclick="showPass()"> Show password
-                    <input type="submit" id="logIn" name="logIn"  value="SIGN IN" class="form-control text-white bg-success">
-                </div>
-            </form>
-                    <a href="create.php" class="text-success " style="text-decoration: none;"><p class="my-3" > Create Account</p> </a>
-                    <a href="forgotPassword.php" class="text-success " style="text-decoration: none;"><p class="mb-5" > Forgot Password?</p>  </a>
+           
+
 
             <hr>
 
