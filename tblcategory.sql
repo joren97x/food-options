@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 15, 2022 at 11:00 AM
--- Server version: 10.4.25-MariaDB
--- PHP Version: 7.4.30
+-- Generation Time: Nov 25, 2022 at 11:11 AM
+-- Server version: 10.4.27-MariaDB
+-- PHP Version: 7.4.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `tblcategory` (
   `id` int(11) NOT NULL,
   `categoryName` varchar(222) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tblcategory`
@@ -44,7 +44,7 @@ INSERT INTO `tblcategory` (`id`, `categoryName`) VALUES
 (5, 'Seafood'),
 (6, 'FastFood'),
 (7, 'Bread'),
-(8, 'Herbs & Spices'),
+(8, 'Junkfoods'),
 (9, 'Drinks');
 
 --

@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 15, 2022 at 11:00 AM
--- Server version: 10.4.25-MariaDB
--- PHP Version: 7.4.30
+-- Generation Time: Nov 25, 2022 at 11:11 AM
+-- Server version: 10.4.27-MariaDB
+-- PHP Version: 7.4.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -32,16 +32,17 @@ CREATE TABLE `tblproducts` (
   `productName` varchar(200) NOT NULL,
   `price` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
-  `stock` int(11) NOT NULL,
   `categoryID` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tblproducts`
 --
 
-INSERT INTO `tblproducts` (`id`, `productName`, `price`, `quantity`, `stock`, `categoryID`) VALUES
-(1, 'Small Eggs', 20, 6, 200, 1);
+INSERT INTO `tblproducts` (`id`, `productName`, `price`, `quantity`, `categoryID`) VALUES
+(1, 'Small Eggs', 20, 1, 1),
+(2, 'Orange', 22, 1, 2),
+(3, 'Big ass Eggs bruh', 8, 1, 1);
 
 --
 -- Indexes for dumped tables
@@ -61,7 +62,7 @@ ALTER TABLE `tblproducts`
 -- AUTO_INCREMENT for table `tblproducts`
 --
 ALTER TABLE `tblproducts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

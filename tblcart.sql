@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 23, 2022 at 01:13 PM
+-- Generation Time: Nov 25, 2022 at 11:11 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 7.4.33
 
@@ -30,18 +30,9 @@ SET time_zone = "+00:00";
 CREATE TABLE `tblcart` (
   `orderID` int(11) NOT NULL,
   `productName` varchar(222) NOT NULL,
-  `price` int(11) NOT NULL
+  `price` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `tblcart`
---
-
-INSERT INTO `tblcart` (`orderID`, `productName`, `price`) VALUES
-(1, 'Small Eggs', 20),
-(3, 'Small Eggs', 20),
-(15, 'Small Eggs', 20),
-(16, 'Small Eggs', 20);
 
 --
 -- Indexes for dumped tables
@@ -61,7 +52,7 @@ ALTER TABLE `tblcart`
 -- AUTO_INCREMENT for table `tblcart`
 --
 ALTER TABLE `tblcart`
-  MODIFY `orderID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `orderID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
