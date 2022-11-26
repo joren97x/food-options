@@ -41,3 +41,70 @@ if (isset($_POST['logIn'])) {
 
 }
 
+if(isset($_GET['addToCart'])) {
+
+    if(!isset($_SESSION['email'])) {
+        header("Location: login.php");
+    }
+    else {
+
+    $foodId = $_GET['addToCart'];
+    echo $foodId;
+    $queryGetFood = "SELECT * FROM tblproducts WHERE id='$foodId'";
+    $queryResultFood = mysqli_query($conn, $queryGetFood);
+
+    if(mysqli_num_rows($queryResultFood)> 0) {
+
+        $food = mysqli_fetch_array($queryResultFood);
+
+            $foodName = $food['productName'];
+            $foodPrice = $food['price'];
+            $foodQty = $food['quantity'];
+            $queryInsertFood = "INSERT INTO tblcart (productName, price, quantity) VALUES ('$foodName', '$foodPrice','$foodQty')";
+            $queryInsertedFood = mysqli_query($conn, $queryInsertFood);
+    }    
+    header("Location: cart.php");
+
+    }
+
+}
+
+if(isset($_GET['removeFromCart'])) {
+
+    $hey = $_GET['removeFromCart'];
+
+    $queryDeleteFromDB = ("DELETE FROM tblCart WHERE orderID = '$hey'");
+    $queryDagan = mysqli_query($conn, $queryDeleteFromDB);
+    header("Location: cart.php");
+
+}
+
+if(isset($_POST['btnShipping'])) {
+
+    mysqli_query($conn,"DELETE FROM tblCart");
+    header("Location: index.php");
+
+}
+
+if(isset($_POST['deleteAcc'])) {
+
+    $email = $_SESSION['email'];
+    mysqli_query($conn, "DELETE FROM tblAccounts WHERE email = '$email'");
+    session_destroy();
+    header("Location: login.php");
+
+}
+
+if(isset($_POST['editAcc'])) {
+
+    $sessionEmail = $_SESSION['email'];
+    $fname = $_POST['firstNameEdit'];
+    $lname = $_POST['lastNameEdit'];
+    $email = $_POST['emailEdit'];
+    $pass = $_POST['password2'];
+    echo $sessionEmail;
+    $query = "UPDATE tblaccounts SET firstName = '$fname', lastName = '$lname', email = '$email', password = '$pass' WHERE email ='$sessionEmail'";
+    mysqli_query($conn, $query);
+    $_SESSION['email'] = $email;
+    header("Location: myAccount.php");
+}
