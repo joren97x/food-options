@@ -2,6 +2,12 @@
     require "conn.php";
     session_start();
 
+    if(!isset($_SESSION['email'])) {
+
+        header("Location: login.php");
+
+    }
+
 ?>
 
 <!DOCTYPE html>
@@ -11,6 +17,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.1/font/bootstrap-icons.css">
+    <style>
+        input .qty{
+            width: 60px;
+        }
+    </style>
 </head>
 <body>
 
@@ -70,35 +81,125 @@
             </div>
             <hr>
 
-                <table class="table table-bordered table-white  align-middle">
+            <?php
 
-                    <tr>
-                        <th >Product</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                        <th>Total</th>
-                    </tr>
-                    <tr>
-                        <td><img src="img/egg.png">Egg 6pcs</td>
-                        <td >₱20</td>
-                        <td>6</td>
-                        <td>Total</td>
-                    </tr>
-                    <tr>
-                        <td><img src="img/egg.png">Egg 6pcs</td>
-                        <td>₱20</td>
-                        <td>6</td>
-                        <td>Total</td>
-                    </tr>
+                if(isset($_GET['btnCategory'])) {
+
+                    echo "<div class='row'>";
+
+                    $categoryID = $_GET['btnCategory'];
+                    $query = "SELECT * FROM tblProducts WHERE categoryID ='$categoryID'";
+                    $result = mysqli_query($conn, $query);
+
+                    if (mysqli_num_rows($result) > 0) {
+                        
+                        foreach($result as $product) {
+                            ?>
+                <div class="col-4 text-success text-center ">
+                    <div class="card " style="width: 300px;">
+                    <img class="card-img-top m-5" src="img/egg.png" alt="Card image cap" style="width: 250px;">
+                        <div class="card-body">
+                            
+                        <form action="functions.php" action="get">
+                                <button class="btn btn-success"  value="<?php echo $product['id'] ?>"  id="addToCart" name="addToCart" >Add to Cart</button>
+                                <h5 class="card-title"><?php echo $product['productName']; ?></h5>
+                                <p class="card-text"><?php echo "₱".$product['price']; ?></p>
+                            </form>
+                                
+                        </div>
+                    </div>
+                </div>
+                            <?php
+
+                        }
+
+                    }
+                    else {
+
+                        echo "<p class='display-6 text-center'>NO PRODUCT FOUND </p>";
+
+                    }                            
+                    }
+                    else {
+                        ?>
+
+                <table class="table table-bordered table-white  text-success align-middle">
+                <tr>
+                            <th >Product</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Total</th>
+                        </tr>
+
+                <?php
+
+                   
+
+                    $queryGetFoodFromCartTable = "SELECT * FROM tblcart";
+                    $queryFoodFromCart = mysqli_query($conn, $queryGetFoodFromCartTable);
+
+                    if(mysqli_num_rows($queryFoodFromCart)> 0) {
+
+                        foreach($queryFoodFromCart as $food) {
+
+                            ?>
+                            
+                        <tr>
+                            <td ><img src="img/egg.png"><?php echo $food['productName']; ?> <br> <form action="functions.php" method="GET">
+                                <button class="btn btn-border btn-danger mx-5 mt-2" value="<?php echo $food['orderID']; ?>" id="removeFromCart" name="removeFromCart">REMOVE</button>
+                            </form> </td>
+                            <td ><?php echo "₱".$food['price']; ?> </td>
+                            <td><input type="number" onchange name="qty" id="qty<?php echo $food['orderID']; ?>" value="<?php echo $food['quantity']; ?>" ></td>
+                            <td><?php echo "₱".$food['price'] * $food['quantity']; ?></td>
+                        </tr>
+                        <script>
+                        
+                        qty<?php echo $food['orderID']; ?>.oninput = function () {
+                            btnCheckOut.value = qty<?php echo $food['orderID']; ?>.value;
+                        }
+
+                    </script>
+                            <?php
+                        }
+
+                    }
+                    else {
+                        
+                        echo "<tr><td class='text-center' colspan='12'>Your cart is currently empty.</td></tr>";
+                    }
+                    
+
+                ?>
+
+                    
 
 
                 </table>
 
+                <?php
+                    }
+
+
+        ?>
+
+                <?php
+
+                    $queryGetFoodFromCartTable = "SELECT * FROM tblcart";
+                    $queryFoodFromCart = mysqli_query($conn, $queryGetFoodFromCartTable);
+
+                    if(mysqli_num_rows($queryFoodFromCart)> 0) {
+                ?>
+
                 <div class="row">
                     <div class="col-12 d-flex justify-content-end">
-                        <button class=" btn btn-success">Check Out</button>
+                        <form action="checkOut.php" method="get">
+                            <button class=" btn btn-success" name="btnCheckOut" id="btnCheckOut" onclick="change()" value="1">Check Out</button>
+                        </form>
                     </div>
                 </div>
+                <?php
+                    }
+                ?>
 
         </div>
 

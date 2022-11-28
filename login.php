@@ -77,7 +77,49 @@ require "conn.php";
 
         <div class="container">
 
-            <form action="functions.php" method="POST" class="text-success">
+        <?php
+
+                if(isset($_GET['btnCategory'])) {
+
+                    echo "<div class='row'>";
+
+                    $categoryID = $_GET['btnCategory'];
+                    $query = "SELECT * FROM tblProducts WHERE categoryID ='$categoryID'";
+                    $result = mysqli_query($conn, $query);
+
+                    if (mysqli_num_rows($result) > 0) {
+                        
+                        foreach($result as $product) {
+                            ?>
+                <div class="col-4 text-success text-center ">
+                    <div class="card " style="width: 300px;">
+                    <img class="card-img-top m-5" src="img/egg.png" alt="Card image cap" style="width: 250px;">
+                        <div class="card-body">
+                            
+                        <form action="functions.php" action="get">
+                                <button class="btn btn-success"  value="<?php echo $product['id'] ?>"  id="addToCart" name="addToCart" >Add to Cart</button>
+                                <h5 class="card-title"><?php echo $product['productName']; ?></h5>
+                                <p class="card-text"><?php echo "₱".$product['price']; ?></p>
+                            </form>
+                                
+                        </div>
+                    </div>
+                </div>
+                            <?php
+
+                        }
+
+                    }
+                    else {
+
+                        echo "<p class='display-6 text-center'>NO PRODUCT FOUND </p>";
+
+                    }                            
+                    }
+                    else {
+                        ?>
+
+<form action="functions.php" method="POST" class="text-success">
                  <p class="display-6 fw-bold">Log In</p>
                 <div class="form-group w-50" id="input">
                     <input type="text" placeholder="Email" id="email" name="email"  class="form-control my-3" style="background-color: #f4f4f4";>
@@ -87,6 +129,14 @@ require "conn.php";
             </form>
                     <a href="create.php" class="text-success " style="text-decoration: none;"><p class="my-3" > Create Account</p> </a>
                     <a href="forgotPassword.php" class="text-success " style="text-decoration: none;"><p class="mb-5" > Forgot Password?</p>  </a>
+
+                    <?php
+                    }
+
+
+        ?>
+
+            
 
             <hr>
 
