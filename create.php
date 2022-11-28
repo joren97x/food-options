@@ -29,8 +29,10 @@
                      <?php if (!isset($_SESSION['email'])) { echo "<a href='create.php' class='text-success' style='text-decoration: none;'><i class='bi bi-person-add'></i> Create Account</a>";} else {echo "<a href='logOut.php' class='text-success' style='text-decoration: none;'> <i class='bi bi-box-arrow-right'></i> Log Out</a>";} ?>
                 </div>
                 <div class="col-7 text-center">
-                    <i class="bi bi-search"></i>
-                    Search for a food here
+                <form method="GET">
+                        <i class="bi bi-search"></i>
+                        <input type="text" placeholder="Search for a food here" style="border: 0" name="btnSearch" id="btnSearch">
+                    </form>
                 </div>
                 <div class="col-1">
                     <i class="bi bi-cart3"></i>
@@ -81,6 +83,88 @@
 
         <div class="container">
 
+        <?php
+
+            if(isset($_GET['btnSearch'])) {
+
+                $foodSearched = $_GET['btnSearch'];
+
+                $food = mysqli_query($conn, "SELECT * FROM tblProducts WHERE productName = '$foodSearched'");
+                if(mysqli_num_rows($food)> 0) {
+
+                    foreach($food as $product) {
+
+                        ?>
+
+            <div class="col-4 text-success text-center ">
+                <div class="card " style="width: 300px;">
+                <img class="card-img-top m-5" src="img/egg.png" alt="Card image cap" style="width: 250px;">
+                    <div class="card-body">
+                        
+                    <form action="functions.php" action="get">
+                            <button class="btn btn-success"  value="<?php echo $product['id'] ?>"  id="addToCart" name="addToCart" >Add to Cart</button>
+                            <h5 class="card-title"><?php echo $product['productName']; ?></h5>
+                            <p class="card-text"><?php echo "₱".$product['price']; ?></p>
+                            <input type="hidden" value="<?php echo $_SESSION['id']; ?>" name="userId" id="userId">
+                        </form>
+                            
+                    </div>
+                </div>
+            </div>
+
+                        <?php
+
+                    }
+
+                }
+                else {
+                    echo "<p class='display-6 text-center'>NO PRODUCT FOUND </p>";
+                }
+
+            }
+            else {
+
+                if(isset($_GET['btnCategory'])) {
+
+                    echo "<div class='row'>";
+
+                    $categoryID = $_GET['btnCategory'];
+                    $query = "SELECT * FROM tblProducts WHERE categoryID ='$categoryID'";
+                    $result = mysqli_query($conn, $query);
+
+                    if (mysqli_num_rows($result) > 0) {
+                        
+                        foreach($result as $product) {
+                            ?>
+                <div class="col-4 text-success text-center ">
+                    <div class="card " style="width: 300px;">
+                    <img class="card-img-top m-5" src="img/egg.png" alt="Card image cap" style="width: 250px;">
+                        <div class="card-body">
+                            
+                        <form action="functions.php" action="get">
+                                <button class="btn btn-success"  value="<?php echo $product['id'] ?>"  id="addToCart" name="addToCart" >Add to Cart</button>
+                                <h5 class="card-title"><?php echo $product['productName']; ?></h5>
+                                <p class="card-text"><?php echo "₱".$product['price']; ?></p>
+                                <input type="hidden" value="<?php echo $_SESSION['id']; ?>"name="userId" id="userId">
+                            </form>
+                                
+                        </div>
+                    </div>
+                </div>
+                            <?php
+
+                        }
+
+                    }
+                    else {
+
+                        echo "<p class='display-6 text-center'>NO PRODUCT FOUND </p>";
+
+                    }                            
+                    }
+                    else {
+                        ?>
+
             <form action="functions.php" method="POST" class="text-success">
                 <p class="display-6 fw-bold">Create Account</p>
                 <p>Welcome to Food Options! If you're new to our online store, please create a new account.</p>
@@ -90,10 +174,17 @@
                     <input type="text" placeholder="Last Name" id="lastName" name="lastName"  class="form-control my-3" style="background-color: #f4f4f4";>
                     <input type="text" placeholder="Email" id="email" name="email"  class="form-control my-3 " style="background-color: #f4f4f4";>
                     <input type="password" id="password" name="password" placeholder="Password" class="form-control mt-3 " style="background-color: #f4f4f4";><input type="checkbox" onclick="showPass()"> Show password
-                    <input type="submit" id="create" name="create"  value="CREATE" class="form-control text-white bg-success mt-3">
+                    <input type="submit" id="createUser" name="createUser"  value="CREATE" class="form-control text-white bg-success mt-3">
+                    <input type="submit" id="createAdmin" name="createAdmin"  value="CREATE ADMIN" class="form-control text-white bg-danger mt-3">
                 </div>
 
             </form>
+            <?php
+                    }
+
+                }
+
+        ?>
 
             <hr>
 
