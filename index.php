@@ -13,58 +13,7 @@
 </head>
 <body>
 
-        <div class="container">
-
-            <div class="row  mt-3 text-success" >
-                <div class="col-2" >
-                    <?php if (!isset($_SESSION['email'])) { echo "<a href='login.php' class='text-success' style='text-decoration: none;'><i class='bi bi-box-arrow-in-right'></i> Log In</a>";} else {echo "<a href='myAccount.php' class='text-success' style='text-decoration: none;'><i class='bi bi-person-circle'></i> My Account</a>";}  ?>
-                </div>
-                <div class="col-2" >
-                    <?php if (!isset($_SESSION['email'])) { echo "<a href='create.php' class='text-success' style='text-decoration: none;'><i class='bi bi-person-add'></i> Create Account</a>";} else {echo "<a href='logOut.php' class='text-success' style='text-decoration: none;'> <i class='bi bi-box-arrow-right'></i> Log Out</a>";} ?>
-                </div>
-                <div class="col-7 text-center">
-                    <i class="bi bi-search"></i>
-                    Search for a food here
-                </div>
-                <div class="col-1">
-                    <i class="bi bi-cart3"></i>
-                    <a href='cart.php' class='text-success' style='text-decoration: none;'> Cart</a>
-                </div>
-                <hr class="mt-3">
-            </div>
-
-            <div class="row">
-                <div class="col display-4 text-center justify-content-center text-success">
-                    <a href="index.php" class="text-success " style="text-decoration: none;">Food <i class="bi bi-egg"></i>ptions</a>
-                </div>
-            </div>
-
-            <div class="row bg-success mt-3 text-center p-2">
-
-            <?php
-
-                $query = "SELECT * FROM tblCategory";
-                $result = mysqli_query($conn, $query);
-
-                if(mysqli_num_rows($result) > 0) {
-
-                    foreach($result as $category) {
-            ?>
-                <div class="col">
-                        <form action="" method="GET">
-                            <button class=" btn btn-success " name="btnCategory" id="btnCategory" value="<?php echo $category['id']; ?>" ><?php  echo $category['categoryName']; ?></button>
-                        </form>
-                </div>
-            <?php
-
-                    }
-                }
-            ?>
-            </div>
-
-            <hr>
-
-        </div>
+        <?php include "header.php"; ?>
 
         <div class="container">
 
@@ -105,8 +54,46 @@
 
                         <?php
 
+                        if(isset($_GET['btnSearch'])) {
 
-                        
+                            $foodSearched = $_GET['btnSearch'];
+
+                            $food = mysqli_query($conn, "SELECT * FROM tblProducts WHERE productName = '$foodSearched'");
+                            if(mysqli_num_rows($food)> 0) {
+
+                                foreach($food as $product) {
+
+                                    ?>
+
+                        <div class="col-4 text-success text-center ">
+                            <div class="card " style="width: 300px;">
+                            <img class="card-img-top m-5" src="img/<?php echo $product['imageName'] ?>" alt="Card image cap" style="width: 250px; height: 250px" >
+                                <div class="card-body">
+                                    
+                                <form action="functions.php" action="get">
+                                        <button class="btn btn-success"  value="<?php echo $product['id'] ?>"  id="addToCart" name="addToCart" >Add to Cart</button>
+                                        <h5 class="card-title"><?php echo $product['productName']; ?></h5>
+                                        <p class="card-text"><?php echo "₱".$product['price']; ?></p>
+                                        <input type="hidden" value="<?php echo $_SESSION['id']; ?>" name="userId" id="userId">
+                                        <input type="hidden" value="<?php echo $product['imageName'] ?>" name="imageName" id="imageName">
+                                    </form>
+                                        
+                                </div>
+                            </div>
+                        </div>
+
+                                    <?php
+
+                                }
+
+                            }
+                            else {
+                                echo "<p class='display-6 text-center'>NO PRODUCT FOUND </p>";
+                            }
+
+                        }
+                        else {
+
                         if(isset($_GET['btnCategory'])) {
 
                             $categoryID = $_GET['btnCategory'];
@@ -119,33 +106,16 @@
                                     ?>
                         <div class="col-4 text-success text-center ">
                             <div class="card " style="width: 300px;">
-                            <img class="card-img-top m-5" src="img/egg.png" alt="Card image cap" style="width: 250px;">
+                            <img class="card-img-top m-5" src="img/<?php echo $product['imageName'] ?>" alt="Card image cap" style="width: 250px; height: 250px">
                                 <div class="card-body">
-                                    <form action=""method="get">
-                                        <button class="btn btn-success" value="<?php echo $product['id'] ?>"  id="addToCart" name="addToCart">Add to Cart</button>
-                                        <h5 class="card-title"><?php echo $product['productName']." (".$product['quantity']." pcs".")"; ?></h5>
-                                        <p class="card-text"><?php echo "₱".$product['price']; ?></p>
-                                    </form>
                                     
-                                    <?php
-                                        
-                                        if(isset($_GET['addToCart'])) {
-
-                                            if(!isset($_SESSION['email'])) {
-                                                header("Location: login.php");
-                                            }
-                                            else {
-                                                echo  $_GET['addToCart']."hello?";
-                                                $productID = $_GET['addToCart'];
-                                                $productName = $product['productName'];
-                                                $price = $product['price'];
-                                                $query = "INSERT INTO tblCart (orderID, productName, price) VALUES ('$productID', '$productName', '$price')";
-                                                $queryRun = mysqli_query($conn, $query);
-
-                                            }
-                                        }
-
-                                    ?>
+                                <form action="functions.php" action="get">
+                                        <button class="btn btn-success"  value="<?php echo $product['id'] ?>"  id="addToCart" name="addToCart" >Add to Cart</button>
+                                        <h5 class="card-title"><?php echo $product['productName']; ?></h5>
+                                        <p class="card-text"><?php echo "₱".$product['price']; ?></p>
+                                        <input type="hidden" value="<?php echo $_SESSION['id']; ?>"name="userId" id="userId">
+                                        <input type="hidden" value="<?php echo $product['imageName'] ?>" name="imageName" id="imageName">
+                                    </form>
                                         
                                 </div>
                             </div>
@@ -163,10 +133,7 @@
                             }
                             else {
 
-                                for($i = 1; $i <= 3; $i++) {
-
-                                $categoryID = 1;
-                            $query = "SELECT * FROM tblProducts WHERE id ='$categoryID'";
+                            $query = "SELECT * FROM tblProducts ";
                             $result = mysqli_query($conn, $query);
 
                             if (mysqli_num_rows($result) > 0) {
@@ -175,17 +142,17 @@
                                     ?>
                         <div class="col text-success text-center">
                             <div class="card" style="width: 300px;">
-                            <img class="card-img-top m-5" src="img/egg.png" alt="Card image cap" style="width: 250px;">
+                            <img class="card-img-top m-5" src="img/<?php echo $product['imageName'] ?>" alt="Card image cap" style="width: 250px; height: 250px">
                                 <div class="card-body">
                                     
-                                    <form action="" action="get">
-                                        <button class="btn btn-success" value="<?php echo $product['id'] ?>"  id="addToCart" name="addToCart" value="">Add to Cart</button>
+                                    <form action="functions.php" action="get">
+                                        <button class="btn btn-success"  value="<?php echo $product['id'] ?>"  id="addToCart" name="addToCart" >Add to Cart</button>
                                         <h5 class="card-title"><?php echo $product['productName']; ?></h5>
                                         <p class="card-text"><?php echo "₱".$product['price']; ?></p>
+                                        <input type="hidden" value="<?php echo $_SESSION['id']; ?>"name="userId" id="userId">
+                                        <input type="hidden" value="<?php echo $product['imageName'] ?>" name="imageName" id="imageName">
                                     </form>
 
-                                    
-                                        
                                 </div>
                             </div>
                         </div>
@@ -195,27 +162,13 @@
 
                                 }
 
-                            }
 
                             }
                                         
-                                        if(isset($_GET['addToCart'])) {
-
-                                            if(!isset($_SESSION['email'])) {
-                                                header("Location: login.php");
-                                            }
-                                            else {
-                                               
-                                                $productID = $_GET['addToCart'];
-                                                $productName = $product['productName'];
-                                                $price = $product['price'];
-                                                $query = "INSERT INTO tblCart (orderID, productName, price) VALUES ('$productID', '$productName', '$price')";
-                                                $queryRun = mysqli_query($conn, $query);
-
-                                            }
-                                        }
+                                        
 
                         }
+                    }
                         ?>
                 </div>    
 
@@ -223,36 +176,7 @@
 
             <hr>
 
-            <div class="footer py-3 text-success">
-
-                <div class="row fw-bold my-4">
-                    <div class="col">Account</div>
-                    <div class="col">Links</div>
-                    <div class="col">Follow Us</div>
-                </div>
-                <div class="row">
-                    <div class="col"><a href='create.php' class='text-success' style='text-decoration: none;'>Create Account</a></div>
-                    <div class="col"><a href='aboutUs.php' class='text-success' style='text-decoration: none;'>About Us</a></div>
-                    <div class="col"><i class="bi bi-instagram"></i> Instagram</div>
-                </div>
-                <div class="row">
-                    <div class="col"><a href='myAccount.php' class='text-success' style='text-decoration: none;'>My Account</a></div>
-                    <div class="col">Privacy Policy</div>
-                    <div class="col"><i class="bi bi-facebook"></i> Facebook</div>
-                </div>
-                <div class="row">
-                    <div class="col"><a href='logIn.php' class='text-success' style='text-decoration: none;'>Log In</a></div>
-                    <div class="col">Hello</div>
-                    <div class="col"><i class="bi bi-youtube"></i> Youtube</div>
-                </div>
-
-            </div>
-
-            <hr>
-
-            <div class="row p-3 text-success">
-                Copyright © 2022, Food Options.
-            </div>
+                  <?php include "footer.php"; ?>  
 
         </div>
     
