@@ -1,3 +1,3 @@
 <?php
 
-$conn = mysqli_connect("localhost", "root", "", "tblAccounts");
+$conn = mysqli_connect("localhost", "root", "", "foodOptions2");
