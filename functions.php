@@ -186,3 +186,42 @@ if(isset($_GET['createCategory'])) {
     header("Location: myAccount.php");
 
 }
+
+if(isset($_GET['deleteCategory'])) {
+
+    $deleteCategory = $_GET['deleteCate'];
+    mysqli_query($conn, "DELETE FROM tblCategory WHERE id = '$deleteCategory'");
+    header("Location: myAccount.php");
+
+}
+
+if(isset($_GET['editCategory'])) {
+
+    $IDcategory = $_GET['editCate'];
+    $newCateName = $_GET['newCategory'];
+
+    mysqli_query($conn, "UPDATE tblCategory SET categoryName = '$newCateName' WHERE id='$IDcategory'");
+    header("Location: myAccount.php");
+
+}
+
+if(isset($_GET['editProduct'])) {
+
+    $IDfood = $_GET['food'];
+    $newImg = $_GET['image2'];
+    $newName = $_GET['productName2'];
+    $newPrice = $_GET['price2'];
+    $quantity = 1;
+    $newCategoryID = $_GET['newCategoryEdit'];
+
+    mysqli_query($conn, "UPDATE tblProducts SET productName = '$newName', imageName ='$newImg', price ='$newPrice', quantity = '$quantity', categoryID ='$newCategoryID' WHERE id = '$IDfood'");
+    header("Location: myAccount.php");
+}
+
+if(isset($_GET['deleteProduct'])) {
+
+    $productId = $_GET['deleteProd'];
+    mysqli_query($conn, "DELETE FROM tblProducts WHERE id='$productId'");
+    header("Location: myAccount.php");
+
+}

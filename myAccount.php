@@ -137,7 +137,7 @@
                     </div>
                     <form action="functions.php">
                     <div class="container ml-5">
-                        <h1 class="modal-title fs-5 ml-5" id="exampleModalLabel">Edit Category</h1>
+                        <h1 class="modal-title fs-5 ml-5 text-dark" id="exampleModalLabel">Create Category</h1>
                         </div>
                         <div class="modal-body">
                             <input type="text" id="newCategory" name="newCategory" placeholder="Category Name"
@@ -148,13 +148,13 @@
                         </div>
                        
                         <div class="container ml-5">
-                        <h1 class="modal-title fs-5 ml-5" id="exampleModalLabel">Edit Category</h1>
+                        <h1 class="modal-title fs-5 ml-5 text-dark" id="exampleModalLabel">Edit Category</h1>
 
                         </div>
                         
                         <div class="modal-body">
                             <div class="dropdown">
-                                <select class="form-select">
+                                <select class="form-select" id="editCate" name="editCate">
 
                                 <?php
                                 $query = "SELECT * FROM tblCategory";
@@ -174,16 +174,15 @@
                                 <input type="text" id="newCategory" name="newCategory" placeholder="New Category Name"
                                 class="form-control mt-2 " style="background-color: #f4f4f4 " ;>
                                 <div class="col d-flex justify-content-end">
-                                <input type="submit" name="editCategory" id="editCategory" value="Save Changes"
+                                <input type="submit" name="editCategory" id="editCategory" value="Edit Category"
                                 class="btn btn-success  mt-2  "></div>
                                
                             </div>
                         </div>
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Category</h1>
-                        </div>
+                        <div class="container ml-5">
+                            <h1 class="modal-title fs-5 text-dark" id="exampleModalLabel">Delete Category</h1> </div>
                         <div class="modal-body">
-                                <select class="form-select">
+                                <select class="form-select" name="deleteCate" id="deleteCate">
 
                                 <?php
                                 $query = "SELECT * FROM tblCategory";
@@ -226,8 +225,13 @@
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Product Settings</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+                   <!-- CREATE PRODUCT modal -->
+                
                 <form action="functions.php" method="GET">
                 <div class="modal-body form-control">
+                <div class="container text-center text-dark">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">CREATE PRODUCT</h1> 
+                </div>
                     IMAGE <input type="file" class="form-control m-2" name="image"  id="image">
                     <input type="text" class="form-control m-2"name="productName" id="productName" placeholder="Product Name">
                     <input type="number" class="form-control m-2"name="price" id="price" placeholder="Price">
@@ -248,11 +252,90 @@
                                 }
                                 ?>
                     </select>
+                <div class="col d-flex justify-content-end">
+                    <input type="submit" name="addProduct" id="addProduct" value="Add Product"
+                                    class="btn btn-success w-25 "> </div>
                 </div>
+
+                   <!-- EDIT PRODUCT modal -->
+
+                
+                <div class="modal-body form-control">
+                <div class="container text-center text-dark">
+                    <h1 class="modal-title fs-5 " id="exampleModalLabel">EDIT PRODUCT</h1> 
+                </div>
+                    SELECT PRODUCT
+                    <form action="functions.php">
+                <select name="food" id="food" class="form-control">
+                <?php
+
+                        $product = mysqli_query($conn, "SELECT * FROM tblProducts");
+                        foreach($product as $product) {
+                            ?>
+                                <option value="<?php echo $product['id']; ?>"><?php echo $product['productName']; ?></option>
+                            <?php
+                        }
+
+                ?>
+                </select>
+                
+                    NEW IMAGE <input type="file" class="form-control m-2" name="image2"  id="image2">
+                    <input type="text" class="form-control m-2"name="productName2" id="productName2" placeholder="New Product Name">
+                    <input type="number" class="form-control m-2"name="price2" id="price2" placeholder="New Price">
+                    NEW CATEGORY<select name="newCategoryEdit" id="newCategoryEdit" class="form-control">
+                    <?php
+                                $query = "SELECT * FROM tblCategory";
+                                $result = mysqli_query($conn, $query);
+
+                                if(mysqli_num_rows($result) > 0) {
+
+                                    foreach($result as $category) {
+
+                                ?>
+                                    <option  value="<?php echo $category['id']; ?>"><?php echo $category['categoryName']; ?></option>
+                                <?php
+                                    }
+                                }
+                    ?>
+                </select>
+                <div class="col d-flex justify-content-end">
+                <input type="submit" name="editProduct" id="editProduct" value="Edit Product"
+                                class="btn btn-success  mt-2 "> </div>
+            </form>
+
+                </div>
+
+                
+                        <div class="modal-body">
+                            <form action="functions.php" method="GET">
+                        <div class="container text-center text-dark">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Delete PRODUCT</h1> </div>
+                                <select class="form-select" name="deleteProd" id="deleteProd">
+
+                                <?php
+                                $query = "SELECT * FROM tblProducts";
+                                $result = mysqli_query($conn, $query);
+
+                                if(mysqli_num_rows($result) > 0) {
+
+                                    foreach($result as $product) {
+
+                                ?>
+                                    <option value="<?php echo $product['id']; ?>"><?php echo $product['productName']; ?></option>
+                                <?php
+                                    }
+                                }
+                                ?>
+                                </select>
+                                <div class="col d-flex justify-content-end">
+                                <input type="submit" name="deleteProduct" id="deleteProduct" value="Delete Product"
+                                class="btn btn-danger  mt-2 "> </div>
+                        </div>
+                        </form>
+
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <input type="submit" name="addProduct" id="addProduct" value="Save Changes"
-                                    class="btn btn-success w-25 ">
+                    
                 </div>
 
                 </div>
@@ -280,9 +363,8 @@
                     <table class="table w-75  table-light table-bordered  text-center">
                     <tr>
                         <th>ID</th>
-                        <th>Product Name</th>
-                        <th>Total</th>
                         <th>Date</th>
+                        <th>Product Name</th>
                         <th>Action</th>
                     </tr>
                     <?php
@@ -293,9 +375,8 @@
                         
                             <tr>
                                 <td><?php echo $order['id'] ?></td>
-                                <td><?php echo $order['productName'] ?></td>
-                                <td><?php echo $order['total'] ?></td>
-                                <td><?php echo $order['date'] ?></td>
+                                <td ><?php echo $order['date'] ?></td>
+                                <td ><?php echo $order['productName'] ?></td>
                                 <td> <form action="functions.php"><button class="text-danger" style="border: 0" value="<?php echo $order['id']; ?>" name="deleteHistory" id="deleteHistory" ><i class="bi bi-trash"></i></button> </form></td>
                             </tr>
                         
@@ -384,10 +465,10 @@
                 </div>
                 <!-- DELETE MODAL -->
                 <input type="button" value="DELETE" class="btn btn-danger w-25 mt-3" data-bs-toggle="modal"
-                    data-bs-target="#exampleModal">
+                    data-bs-target="#deleteAccount">
 
                 <!-- Modal -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                <div class="modal fade" id="deleteAccount" tabindex="-1" aria-labelledby="exampleModalLabel"
                     aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
