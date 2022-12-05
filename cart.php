@@ -47,7 +47,7 @@
 
                             ?>
 
-        <div class="col-4 text-success text-center ">
+        <div class="col-lg-4 text-success text-center ">
             <div class="card " style="width: 300px;">
                 <img class="card-img-top m-5" src="img/<?php echo $product['imageName'] ?>" alt="Card image cap" style="width: 250px; height: 250px">
                 <div class="card-body">
@@ -89,23 +89,23 @@ else {
                         
                         foreach($result as $product) {
                             ?>
-        <div class="col-4 text-success text-center ">
-            <div class="card " style="width: 300px;">
-                <img class="card-img-top m-5" src="img/<?php echo $product['imageName'] ?>" alt="Card image cap" style="width: 250px; height: 250px">
-                <div class="card-body">
+            <div class="col-lg-4 text-success text-center ">
+                <div class="card " style="width: 300px;">
+                    <img class="card-img-top m-5" src="img/<?php echo $product['imageName'] ?>" alt="Card image cap" style="width: 250px; height: 250px">
+                    <div class="card-body">
 
-                    <form action="functions.php" action="get">
-                        <button class="btn btn-success" value="<?php echo $product['id'] ?>" id="addToCart"
-                            name="addToCart">Add to Cart</button>
-                        <h5 class="card-title"><?php echo $product['productName']; ?></h5>
-                        <p class="card-text"><?php echo "₱".$product['price']; ?></p>
-                        <input type="hidden" value="<?php echo $_SESSION['id']; ?>" name="userId" id="userId">
-                        <input type="hidden" value="<?php echo $product['imageName'] ?>" name="imageName" id="imageName">
-                    </form>
+                        <form action="functions.php" action="get">
+                            <button class="btn btn-success" value="<?php echo $product['id'] ?>" id="addToCart"
+                                name="addToCart">Add to Cart</button>
+                            <h5 class="card-title"><?php echo $product['productName']; ?></h5>
+                            <p class="card-text"><?php echo "₱".$product['price']; ?></p>
+                            <input type="hidden" value="<?php echo $_SESSION['id']; ?>" name="userId" id="userId">
+                            <input type="hidden" value="<?php echo $product['imageName'] ?>" name="imageName" id="imageName">
+                        </form>
 
+                    </div>
                 </div>
             </div>
-        </div>
         <?php
 
                         }
@@ -119,12 +119,16 @@ else {
                     }
                     else {
                         ?>
-        <table class="table table-bordered table-white  text-success align-middle">
+        
+        <div class="container">
+
+<form action="checkOut.php">
+        <table class="table table-bordered table-white text-center text-success align-middle">
             <tr>
                 <th>Product</th>
                 <th>Price</th>
                 <th>Quantity</th>
-                <th>Total</th>
+                <th>Action</th>
             </tr>
 
             <?php
@@ -141,25 +145,18 @@ else {
                             ?>
 
             <tr>
+                
                 <td><img src="img/<?php echo $food['imageName'] ?>" style="width: 100px; height: 100px;"><?php echo $food['productName']; ?> <br>
-                    <form action="functions.php" method="GET">
+                    
+                </td>
+                <td ><?php echo "₱".$food['price']; ?> </td>
+                <td><input class="form-control w-25" type="number" name="quantity<?php echo $food['id']; ?>" value="<?php echo $food['quantity']; ?>"></td>
+                <td colspan="2"><form action="functions.php" method="GET">
                         <button class="btn btn-border btn-danger mx-5 mt-2" value="<?php echo $food['id']; ?>"
                             id="removeFromCart" name="removeFromCart">REMOVE</button>
-                    </form>
-                </td>
-                <td><?php echo "₱".$food['price']; ?> </td>
-                <td><input type="number" onchange="myFunctionTotal()" name="qty" id="qty<?php echo $food['id']; ?>"
-                        value="<?php echo $food['quantity']; ?>"></td>
-                <td id="tootal"><?php echo "₱".$food['price']; ?></td>
+                    </form></td>
             </tr>
-            <script>
-
-                function myFunctionTotal(){
-                    var qtyyy = document.getElementById("qty<?php echo $food['id']; ?>").value;
-                    document.getElementById("tootal").innerHTML = "<?php echo "₱".$food['price']*$food['quantity']; ?>";
-                }
-
-            </script>
+            
             <?php
                         }
 
@@ -187,18 +184,21 @@ else {
                     if(mysqli_num_rows($queryFoodFromCart)> 0) {
                 ?>
 
-        <div class="row">
-            <div class="col-12 d-flex justify-content-end">
-                <form action="checkOut.php" method="get">
-                    <button class=" btn btn-success" name="btnCheckOut" id="btnCheckOut" onclick="change()"
-                        value="1">Check Out</button>
-                </form>
+            <div class="row">
+                <div class="col-lg-12 d-flex justify-content-end">
+                        <button class=" btn btn-success" name="btnCheckOut" id="btnCheckOut" >Check Out</button>
+                </div>
             </div>
-        </div>
         <?php
                     }
+                    ?>
+                    </form>
+                    </div>
+                    <?php
                 }
                 ?>
+        
+
 
     </div>
 

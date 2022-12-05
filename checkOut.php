@@ -130,10 +130,10 @@
                         <?php
                             }
                                 $userID = $_SESSION['id'];
-                                $qty = $_GET['btnCheckOut'];
                                 $foodFromCart = mysqli_query($conn, "SELECT * FROM tblcart WHERE userID='$userID'");
                                 if(mysqli_num_rows($foodFromCart) > 0) {
                                     foreach($foodFromCart as $food) {
+                                        $qty = $_GET["quantity".$food['id']];
                         ?>
                         
                         
@@ -143,7 +143,7 @@
                                     <?php echo $food['productName']; ?>
                                 </div>
                                 <div class="col">
-                                    ₱<?php echo $food['price']*$qty.".00"; ?>
+                                    ₱<?php $total += $food['price']*$qty.".00"; echo $food['price']*$qty.".00"; ?>
                                 </div>
                             </div>
                             <?php
@@ -166,18 +166,7 @@
                                 <div class="col">
                                     
                                     <?php
-                                            $qty = $_GET['btnCheckOut'];
-                                            $userID = $_SESSION['id'];
-                                            $foodFromCart = mysqli_query($conn, "SELECT * FROM tblcart WHERE userID = '$userID'");
-                                            if(mysqli_num_rows($foodFromCart) > 0) {
-                                                
-                                                foreach($foodFromCart as $food) {
-                                    
-                                                    $total += $food['price']*$qty;
-                                    
-                                                }
                                                 echo "₱".$total.".00";
-                                            }
                                     ?>
                                 </div>
                             </div>
