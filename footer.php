@@ -17,7 +17,7 @@
                 </div>
                 <div class="row">
                     <div class="col"><a href='logIn.php' class='text-success' style='text-decoration: none;'>Log In</a></div>
-                    <div class="col">Hello</div>
+                    <div class="col">hahaha</div>
                     <div class="col"><i class="bi bi-youtube"></i> Youtube</div>
                 </div>
 

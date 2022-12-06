@@ -15,6 +15,9 @@
 
 <head>
     <title>Cart - Food Options</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
@@ -38,7 +41,7 @@
 
                 if(isset($_GET['btnSearch'])) {
 
-                    $foodSearched = $_GET['btnSearch'];
+                    $foodSearched = strtolower($_GET['btnSearch']);
 
                     $food = mysqli_query($conn, "SELECT * FROM tblProducts WHERE productName = '$foodSearched'");
                     if(mysqli_num_rows($food)> 0) {
@@ -47,7 +50,7 @@
 
                             ?>
 
-        <div class="col-4 text-success text-center ">
+        <div class="col-lg-4 text-success text-center ">
             <div class="card " style="width: 300px;">
                 <img class="card-img-top m-5" src="img/<?php echo $product['imageName'] ?>" alt="Card image cap" style="width: 250px; height: 250px">
                 <div class="card-body">
@@ -89,23 +92,23 @@ else {
                         
                         foreach($result as $product) {
                             ?>
-        <div class="col-4 text-success text-center ">
-            <div class="card " style="width: 300px;">
-                <img class="card-img-top m-5" src="img/<?php echo $product['imageName'] ?>" alt="Card image cap" style="width: 250px; height: 250px">
-                <div class="card-body">
+            <div class="col-lg-4 text-success text-center ">
+                <div class="card " style="width: 300px;">
+                    <img class="card-img-top m-5" src="img/<?php echo $product['imageName'] ?>" alt="Card image cap" style="width: 250px; height: 250px">
+                    <div class="card-body">
 
-                    <form action="functions.php" action="get">
-                        <button class="btn btn-success" value="<?php echo $product['id'] ?>" id="addToCart"
-                            name="addToCart">Add to Cart</button>
-                        <h5 class="card-title"><?php echo $product['productName']; ?></h5>
-                        <p class="card-text"><?php echo "₱".$product['price']; ?></p>
-                        <input type="hidden" value="<?php echo $_SESSION['id']; ?>" name="userId" id="userId">
-                        <input type="hidden" value="<?php echo $product['imageName'] ?>" name="imageName" id="imageName">
-                    </form>
+                        <form action="functions.php" action="get">
+                            <button class="btn btn-success" value="<?php echo $product['id'] ?>" id="addToCart"
+                                name="addToCart">Add to Cart</button>
+                            <h5 class="card-title"><?php echo $product['productName']; ?></h5>
+                            <p class="card-text"><?php echo "₱".$product['price']; ?></p>
+                            <input type="hidden" value="<?php echo $_SESSION['id']; ?>" name="userId" id="userId">
+                            <input type="hidden" value="<?php echo $product['imageName'] ?>" name="imageName" id="imageName">
+                        </form>
 
+                    </div>
                 </div>
             </div>
-        </div>
         <?php
 
                         }
@@ -119,12 +122,16 @@ else {
                     }
                     else {
                         ?>
-        <table class="table table-bordered table-white  text-success align-middle">
-            <tr>
+        
+        <div class="container">
+
+<form action="checkOut.php">
+        <table class="table table-bordered bg-light  text-success align-middle">
+            <tr class="text-center">
                 <th>Product</th>
                 <th>Price</th>
                 <th>Quantity</th>
-                <th>Total</th>
+                <th>Action</th>
             </tr>
 
             <?php
@@ -141,25 +148,16 @@ else {
                             ?>
 
             <tr>
+                
                 <td><img src="img/<?php echo $food['imageName'] ?>" style="width: 100px; height: 100px;"><?php echo $food['productName']; ?> <br>
-                    <form action="functions.php" method="GET">
-                        <button class="btn btn-border btn-danger mx-5 mt-2" value="<?php echo $food['id']; ?>"
-                            id="removeFromCart" name="removeFromCart">REMOVE</button>
-                    </form>
+                    
                 </td>
-                <td><?php echo "₱".$food['price']; ?> </td>
-                <td><input type="number" onchange="myFunctionTotal()" name="qty" id="qty<?php echo $food['id']; ?>"
-                        value="<?php echo $food['quantity']; ?>"></td>
-                <td id="tootal"><?php echo "₱".$food['price']; ?></td>
+                <td class="text-center"><?php echo "₱".$food['price']; ?> </td>
+                <td class="d-flex justify-content-center mt-4"><input class="form-control w-25" type="number" name="quantity<?php echo $food['id']; ?>" value="<?php echo $food['quantity']; ?>"></td>
+                <td><button class="btn btn-border btn-danger mx-5 mt-2" value="<?php echo $food['id']; ?>"
+                            id="removeFromCart" name="removeFromCart">REMOVE</button></td>
             </tr>
-            <script>
-
-                function myFunctionTotal(){
-                    var qtyyy = document.getElementById("qty<?php echo $food['id']; ?>").value;
-                    document.getElementById("tootal").innerHTML = "<?php echo "₱".$food['price']*$food['quantity']; ?>";
-                }
-
-            </script>
+            
             <?php
                         }
 
@@ -187,18 +185,21 @@ else {
                     if(mysqli_num_rows($queryFoodFromCart)> 0) {
                 ?>
 
-        <div class="row">
-            <div class="col-12 d-flex justify-content-end">
-                <form action="checkOut.php" method="get">
-                    <button class=" btn btn-success" name="btnCheckOut" id="btnCheckOut" onclick="change()"
-                        value="1">Check Out</button>
-                </form>
+            <div class="row">
+                <div class="col-lg-12 d-flex justify-content-end">
+                        <button class=" btn btn-success" name="btnCheckOut" id="btnCheckOut" >Check Out</button>
+                </div>
             </div>
-        </div>
         <?php
                     }
+                    ?>
+                    </form>
+                    </div>
+                    <?php
                 }
                 ?>
+        
+
 
     </div>
 
@@ -213,15 +214,3 @@ else {
 </body>
 
 </html>
-
-<script>
-    function showPass() {
-        var pass = document.getElementById("password");
-        if (pass.type === "password") {
-            pass.type = "text";
-        } else {
-            pass.type = "password";
-        }
-
-    }
-</script>
