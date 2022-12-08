@@ -10,9 +10,8 @@ if (isset($_POST['createUser'])) {
     $password = $_POST['password'];
     $userType = "user";
 
-    $query = "INSERT INTO tblAccounts (firstName, lastName, email, password, userType) 
-                VALUES ('$firstName', '$lastName', '$email', '$password', '$userType')";
-    $result = mysqli_query($conn, $query);
+    mysqli_query($conn, "INSERT INTO tblAccounts (firstName, lastName, email, password, userType) 
+    VALUES ('$firstName', '$lastName', '$email', '$password', '$userType')");
 
     $_SESSION['email'] = $email;
     $_SESSION['password'] = $password;
@@ -20,11 +19,10 @@ if (isset($_POST['createUser'])) {
     $_SESSION['lastName'] = $lastName;
     $_SESSION['userType'] = $userType;
 
-    $getId = mysqli_query($conn, "SELECT * FROM tblAccounts");
+    $getId = mysqli_query($conn, "SELECT * FROM tblAccounts WHERE email = '$email'");
     $resultOfGetId = mysqli_fetch_array($getId);
     $_SESSION['id'] = $resultOfGetId['id'];
 
-    
     header("Location: index.php");
 }
 
@@ -35,10 +33,9 @@ if (isset($_POST['createAdmin'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
     $userType = "admin";
-
-    $query = "INSERT INTO tblAccounts (firstName, lastName, email, password, userType) 
-                VALUES ('$firstName', '$lastName', '$email', '$password', '$userType')";
-    $result = mysqli_query($conn, $query);
+    
+    mysqli_query($conn,"INSERT INTO tblAccounts (firstName, lastName, email, password, userType) 
+    VALUES ('$firstName', '$lastName', '$email', '$password', '$userType')");
 
     $_SESSION['email'] = $email;
     $_SESSION['password'] = $password;
@@ -46,7 +43,7 @@ if (isset($_POST['createAdmin'])) {
     $_SESSION['lastName'] = $lastName;
     $_SESSION['userType'] = $userType;
 
-    $getId = mysqli_query($conn, "SELECT * FROM tblAccounts");
+    $getId = mysqli_query($conn, "SELECT * FROM tblAccounts WHERE email = '$email'");
     $resultOfGetId = mysqli_fetch_array($getId);
     $_SESSION['id'] = $resultOfGetId['id'];
     
@@ -120,16 +117,6 @@ if(isset($_GET['addProduct'])) {
 
 }
 
-if(isset($_GET['removeFromCart'])) {
-
-    $hey = $_GET['removeFromCart'];
-
-    $queryDeleteFromDB = ("DELETE FROM tblCart WHERE id = '$hey'");
-    $queryDagan = mysqli_query($conn, $queryDeleteFromDB);
-    header("Location: cart.php");
-
-}
-
 if(isset($_GET['deleteHistory'])) {
 
     $orderID = $_GET['deleteHistory'];
@@ -182,7 +169,48 @@ if(isset($_POST['editAcc'])) {
 if(isset($_GET['createCategory'])) {
 
     $newCategory = $_GET['newCategory'];
+    echo $newCategory;
+    echo "ih";
     mysqli_query($conn,"INSERT INTO tblCategory (categoryName) VALUES ('$newCategory')");
+    header("Location: myAccount.php");
+
+}
+
+if(isset($_GET['deleteCategory'])) {
+
+    $deleteCategory = $_GET['deleteCate'];
+    mysqli_query($conn, "DELETE FROM tblCategory WHERE id = '$deleteCategory'");
+    header("Location: myAccount.php");
+
+}
+
+if(isset($_GET['editCategory'])) {
+
+    $IDcategory = $_GET['editCate'];
+    $newCateName = $_GET['newCategory2'];
+
+    mysqli_query($conn, "UPDATE tblCategory SET categoryName = '$newCateName' WHERE id='$IDcategory'");
+    header("Location: myAccount.php");
+
+}
+
+if(isset($_GET['editProduct'])) {
+
+    $IDfood = $_GET['food'];
+    $newImg = $_GET['image2'];
+    $newName = $_GET['productName2'];
+    $newPrice = $_GET['price2'];
+    $quantity = 1;
+    $newCategoryID = $_GET['newCategoryEdit'];
+
+    mysqli_query($conn, "UPDATE tblProducts SET productName = '$newName', imageName ='$newImg', price ='$newPrice', quantity = '$quantity', categoryID ='$newCategoryID' WHERE id = '$IDfood'");
+    header("Location: myAccount.php");
+}
+
+if(isset($_GET['deleteProduct'])) {
+
+    $productId = $_GET['deleteProd'];
+    mysqli_query($conn, "DELETE FROM tblProducts WHERE id='$productId'");
     header("Location: myAccount.php");
 
 }

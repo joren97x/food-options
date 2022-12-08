@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 30, 2022 at 07:34 AM
+-- Generation Time: Dec 01, 2022 at 04:06 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 7.4.33
 
@@ -77,12 +77,12 @@ CREATE TABLE `tblcategory` (
 INSERT INTO `tblcategory` (`id`, `categoryName`) VALUES
 (1, 'Eggs'),
 (2, 'Fruits'),
-(3, 'Vegetables'),
+(3, 'Vegetable'),
 (4, 'Meat'),
 (5, 'Seafood'),
-(6, 'FastFood'),
+(6, 'Junkfood'),
 (7, 'Bread'),
-(8, 'Drinks'),
+(8, 'Milk'),
 (9, 'Drinks');
 
 -- --------------------------------------------------------
@@ -127,7 +127,6 @@ CREATE TABLE `tblproducts` (
 --
 
 INSERT INTO `tblproducts` (`id`, `productName`, `imageName`, `price`, `quantity`, `categoryID`) VALUES
-(2, 'Egg', 'egg.png', 6, 1, 1),
 (3, 'Mango', 'mango.png', 19, 1, 2),
 (4, 'Milk', 'milk.png', 19, 1, 9),
 (5, 'Orange', 'orange.png', 10, 1, 2);
@@ -186,7 +185,7 @@ ALTER TABLE `tblcart`
 -- AUTO_INCREMENT for table `tblcategory`
 --
 ALTER TABLE `tblcategory`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `tblorderhistory`
