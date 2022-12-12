@@ -7,15 +7,28 @@
                 <div class="col-2" >
                     <?php if (!isset($_SESSION['email'] )) { echo "<a href='create.php' class='text-success' style='text-decoration: none;'><i class='bi bi-person-add'></i> Create Account</a>";} else {echo "<a href='logOut.php' class='text-success' style='text-decoration: none;'> <i class='bi bi-box-arrow-right'></i> Log Out</a>";} ?>
                 </div>
-                <div class="col-7 text-center">
+                <div class="col-6 text-center">
                     <form method="GET">
                         <i class="bi bi-search"></i>
                         <input type="text" placeholder="Search for a food here" style="border: 0" name="btnSearch" id="btnSearch">
                     </form>
                 </div>
-                <div class="col-1">
+                <div class="col-2 d-flex justify-content-end">
                     <i class="bi bi-cart3"></i>
-                    <a href='cart.php' class='text-success' style='text-decoration: none;'> Cart</a>
+                    <a href='cart.php' class='text-success' style='text-decoration: none;'> Cart (<?php if (isset($_SESSION['email'])) {
+                                                                                                            $id = $_SESSION['id']; 
+                                                                                                            $itemFromCart = mysqli_query($conn, "SELECT * FROM tblCart WHERE userID='$id'");
+                                                                                                                if(mysqli_num_rows($itemFromCart) > 0) { 
+                                                                                                                    echo mysqli_num_rows($itemFromCart);
+                                                                                                                } 
+                                                                                                                else {
+                                                                                                                    echo "0";
+                                                                                                                } 
+                                                                                                        } 
+                                                                                                        else {
+                                                                                                            echo "0";
+                                                                                                        }   
+                                                                                                    ?>)</a>
                 </div>
                 <hr class="mt-3">
             </div>

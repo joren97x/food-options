@@ -1,3 +1,3 @@
 <?php
 
-$conn = mysqli_connect("localhost", "root", "", "foodyawa");
+$conn = mysqli_connect("localhost", "root", "", "foodoptionsDB");
