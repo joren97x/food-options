@@ -111,7 +111,7 @@ else {
                 </td>
                 <td class="text-center"><?php echo "₱".$food['price']; ?> </td>
                 <td class="d-flex justify-content-center mt-4"><input class="form-control w-25" type="number" name="quantity<?php echo $food['id']; ?>" value="<?php echo $food['quantity']; ?>"></td>
-                <td><button class="btn btn-border btn-danger mx-5 mt-2" value="<?php echo $food['id']; ?>"
+                <td class="text-center"><button class="btn btn-border btn-danger mx-5 mt-2" value="<?php echo $food['id']; ?>"
                             id="removeFromCart" name="removeFromCart">REMOVE</button></td>
             </tr>
             

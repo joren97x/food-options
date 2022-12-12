@@ -1,4 +1,4 @@
-<div class="col-3 mt-3 text-success text-center ">
+<div class="col-3 mt-3 text-success text-center d-flex justify-content-center">
     <div class="card shadow" style="width: 200px;">
         <img class="card-img-top rounded " src="img/<?php echo $product['imageName'] ?>" alt="Card image cap" style="width: 150px; height: 150px; margin-left: 25px; margin-top: 20px;">
             <div class="card-body">

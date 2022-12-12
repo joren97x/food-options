@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 08, 2022 at 07:47 AM
+-- Generation Time: Dec 12, 2022 at 02:17 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 7.4.33
 
@@ -108,7 +108,15 @@ INSERT INTO `tblorderhistory` (`id`, `userID`, `productName`, `total`, `date`) V
 (21, 6, 'Mango', 25, '2022-11-30'),
 (22, 6, 'Egg', 25, '2022-11-30'),
 (23, 7, 'Milk', 0, '2022-12-08'),
-(24, 7, 'Shrimp', 0, '2022-12-08');
+(24, 7, 'Shrimp', 0, '2022-12-08'),
+(25, 6, 'Mango', 0, '2022-12-12'),
+(26, 6, 'Milk', 0, '2022-12-12'),
+(27, 6, 'Orange', 0, '2022-12-12'),
+(28, 6, 'Shrimp', 0, '2022-12-12'),
+(29, 6, 'Crab', 0, '2022-12-12'),
+(30, 8, 'Orange', 0, '2022-12-12'),
+(31, 8, 'Shrimp', 0, '2022-12-12'),
+(32, 6, 'Bangus', 0, '2022-12-12');
 
 -- --------------------------------------------------------
 
@@ -134,7 +142,18 @@ INSERT INTO `tblproducts` (`id`, `productName`, `imageName`, `price`, `quantity`
 (4, 'Milk', 'milk.png', 19, 1, 9),
 (5, 'Orange', 'orange.png', 10, 1, 2),
 (6, 'Shrimp', 'shrimp.png', 25, 1, 5),
-(7, 'Crab', 'crab.png', 22, 1, 5);
+(7, 'Crab', 'crab.png', 22, 1, 5),
+(8, 'Onion', 'onion.png', 5, 1, 3),
+(9, 'Tomato', 'tomato.png', 6, 1, 3),
+(10, 'Garlic', 'garlic.png', 10, 1, 3),
+(11, 'Sili Spada', 'silispada.png', 5, 1, 3),
+(12, 'Kamunggay', 'kamunggay.png', 1, 1, 3),
+(13, 'Kalabasa', 'Kalabasa.png', 10, 1, 3),
+(14, 'Eggplant', 'eggplant.png', 12, 1, 3),
+(15, 'Luy A', 'luya.png', 5, 1, 3),
+(16, 'Magic Sarap', 'magicsarap.png', 10, 1, 3),
+(17, 'Bangus', 'bangus.png', 200, 1, 5),
+(18, 'Chicken', 'chicken.png', 200, 1, 4);
 
 --
 -- Indexes for dumped tables
@@ -184,7 +203,7 @@ ALTER TABLE `tblaccounts`
 -- AUTO_INCREMENT for table `tblcart`
 --
 ALTER TABLE `tblcart`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `tblcategory`
@@ -196,13 +215,13 @@ ALTER TABLE `tblcategory`
 -- AUTO_INCREMENT for table `tblorderhistory`
 --
 ALTER TABLE `tblorderhistory`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `tblproducts`
 --
 ALTER TABLE `tblproducts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

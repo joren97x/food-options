@@ -20,7 +20,7 @@
         <div class="container">
 
             <div class="row  p-5 text-center text-success" style="background-image: url(img/1.png); ">
-                <div class="col display-3 fw-bold text-uppercase">
+                <div class="col display-3 fw-bold text-uppercase ">
                     <p id="Category">
                         <?php
                         if(isset($_GET['btnCategory'])) {
@@ -52,7 +52,7 @@
 
             <div class="container mt-5">
                 
-                <div class="row">
+                <div class="row ">
 
                         <?php
 
