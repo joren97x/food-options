@@ -1,6 +1,17 @@
 <?php
     session_start();
     require "conn.php";
+
+    if(isset($_GET['removeFromCart'])) {
+
+        $id = $_GET['removeFromCart'];
+    
+        $queryDeleteFromDB = ("DELETE FROM tblCart WHERE id = '$id'");
+        $queryDagan = mysqli_query($conn, $queryDeleteFromDB);
+        header("Location: cart.php");
+    
+    }
+
     $total = 0;
     if(!isset($_SESSION['email'])) {
 
@@ -12,13 +23,15 @@
 <html lang="en">
 <head>
     <title>Check Out - Food Options</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.1/font/bootstrap-icons.css">
 </head>
 <body>
-<p>asda</p>
-<h1>HAHAHAHAHA</h1>
+
         <div class="container-fluid">
             <div class="container">
                 <div class="row m-5 ">
@@ -131,10 +144,10 @@
                         <?php
                             }
                                 $userID = $_SESSION['id'];
-                                $qty = $_GET['btnCheckOut'];
                                 $foodFromCart = mysqli_query($conn, "SELECT * FROM tblcart WHERE userID='$userID'");
                                 if(mysqli_num_rows($foodFromCart) > 0) {
                                     foreach($foodFromCart as $food) {
+                                        $qty = $_GET["quantity".$food['id']];
                         ?>
                         
                         
@@ -144,7 +157,7 @@
                                     <?php echo $food['productName']; ?>
                                 </div>
                                 <div class="col">
-                                    ₱<?php echo $food['price']*$qty.".00"; ?>
+                                    ₱<?php $total += $food['price']*$qty.".00"; echo $food['price']*$qty.".00"; ?>
                                 </div>
                             </div>
                             <?php
@@ -167,18 +180,7 @@
                                 <div class="col">
                                     
                                     <?php
-                                            $qty = $_GET['btnCheckOut'];
-                                            $userID = $_SESSION['id'];
-                                            $foodFromCart = mysqli_query($conn, "SELECT * FROM tblcart WHERE userID = '$userID'");
-                                            if(mysqli_num_rows($foodFromCart) > 0) {
-                                                
-                                                foreach($foodFromCart as $food) {
-                                    
-                                                    $total += $food['price']*$qty;
-                                    
-                                                }
                                                 echo "₱".$total.".00";
-                                            }
                                     ?>
                                 </div>
                             </div>
@@ -197,13 +199,6 @@
 </body>
 </html>
 
-<script>
-    function changeValueOfTotal() {
-
-        document.getElementById("total").value = <?php echo $total; ?>;
-
-    }
-</script>
 
 
 
